@@ -14,18 +14,19 @@ var requestListener = function (request, response) {
                 return console.log(err);
             }
 	    console.log(stats.size);
-            var buffer = new buffer(2489);
+            var buffer = new buffer(stats.size);
             var offset = 0,
             length = buffer.length,
             position = 0;
             
-	    fs.read(fd, buffer, offset, length, position, function (errRead, bytesRead) { 
+	    fs.read(fd, buffer, offset, length, position, function (errRead, bytesRead, buffer) { 
                 if (errRead) {
                     return console.log(errRead);
                 }
-                response.write(buffer.toString());
+                response.write(buffer.toString("utf8", 0, bytesRead));
                 console.log(buffer.toString());
                 response.end();
+		fs.close(fd);
                 });
             });
     });
