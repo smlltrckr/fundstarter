@@ -1,13 +1,16 @@
 var http = require('http'),
     fs = require('fs');
 
-fs.readFile('./index.html', function (err, html) {
-    if (err) {
-        throw err;
-    }
-    http.createServer(function(request, response) {
-        response.writeHeader(200, {"Content-Type": "text/html"});
-        response.write(html);
-        response.end();
-    }).listen(8080);
-});
+var requestListener = function (req, res) {
+    res.writeHead(200);
+    res.write(html);
+    res.end(fs.readFileSync('/index.html', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data);
+    }));
+}
+
+var server = http.createServer(requestListener);
+server.listen(8080);
