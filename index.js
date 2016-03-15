@@ -19,12 +19,12 @@ var requestListener = function (request, response) {
             length = buffer.length,
             position = 0;
             
-	    fs.read(fd, buffer, offset, length, position, function (errRead, bytesRead, buffer) { 
+	    fs.read(fd, buffer, offset, length, position, function (errRead, bytesRead, buff) { 
                 if (errRead) {
                     return console.log(errRead);
                 }
-                response.write(buffer.toString("utf8", 0, bytesRead));
-                console.log(buffer.toString());
+                response.write(buff.toString("utf8", 0, bytesRead));
+                console.log(buff.toString("utf8", 0, bytesRead));
                 response.end();
 		fs.close(fd);
                 });
