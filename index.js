@@ -4,13 +4,16 @@ var http = require('http'),
 var requestListener = function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
     fs.stat(path, function (errStat, stats) {
-        if stats.isFile() {
-            fs.open('./index.html', 'r', function (err, fd) {
-            if (err) {
-                console.log(err);
+        if (stats.isFile()) {
+            fs.open('./index.html', 'r', function (errOpen, fd) {
+            if (errOpen) {
+                console.log(errOpen);
             }
-            fs.read(fd, buffer, 0, buffer.length, position, function(err, bytesRead, buff) {
-                response.write(buff.toString('utf8', 0, bytesRead));
+            fs.read(fd, function(err, bytesRead, buff) {
+                if (err) {
+		    return console.log(err);
+		}
+		response.write(buff.toString('utf8', 0, bytesRead));
                 console.log(buff.toString('utf8', 0, bytesRead));
                 response.end();
                 });
