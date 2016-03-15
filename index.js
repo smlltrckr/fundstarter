@@ -8,9 +8,9 @@ var requestListener = function (request, response) {
             return console.log(err);
         }
         response.write(data);
+	repsponse.end();
     });
-    response.end();
-}
+}	
 
 var server = http.createServer(requestListener);
 server.listen(process.env.PORT || 8080);
