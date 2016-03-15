@@ -8,7 +8,13 @@ var requestListener = function (request, response) {
         if (errStat) {
             return console.log(errStat);   
         }
-        fs.open(filename, 'r', function (err, fd) {
+	console.log(stats.size);
+        var buffer = new buffer(stats.size);
+        var offset = 0,
+            length = buffer.length,
+            position = 0;
+           	
+	fs.open(filename, 'r', function (err, fd) {
             if (err) {
                 return console.log(err);
             }
@@ -17,7 +23,7 @@ var requestListener = function (request, response) {
                     return console.log(errRead);
                 }
                 response.write(buffer.toString());
-                console.log(buff.toString());
+                console.log(buffer.toString());
                 response.end();
                 });
             });
