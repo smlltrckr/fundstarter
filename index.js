@@ -1,26 +1,26 @@
 var http = require('http'),
-    fs = require('fs');
+    fs = require('fs'),
+    filename = 'index.html';
 
 var requestListener = function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
-    fs.stat(path, function (errStat, stats) {
-        if (stats.isFile()) {
-            fs.open('./index.html', 'r', function (errOpen, fd) {
-            if (errOpen) {
-                console.log(errOpen);
+    fs.stat(filename, function (errStat, stats) {
+        if (errStat) {
+            return console.log(errStat);   
+        }
+        fs.open(filename, 'r', function (err, fd) {
+            if (err) {
+                return console.log(err);
             }
-            fs.read(fd, function(err, bytesRead, buff) {
-                if (err) {
-		    return console.log(err);
-		}
-		response.write(buff.toString('utf8', 0, bytesRead));
-                console.log(buff.toString('utf8', 0, bytesRead));
+            fs.read(fd, buffer, offset, length, position, function (errRead, bytesRead) { 
+                if (errRead) {
+                    return console.log(errRead);
+                }
+                response.write(buffer.toString());
+                console.log(buff.toString());
                 response.end();
                 });
             });
-        } else {
-            return console.log(errStat);
-        }
     });
 }
 
