@@ -3,7 +3,7 @@ var http = require('http'),
 
 var requestListener = function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
-    fs.readFile('index.html', 'utf8', function (err, data) {
+    fs.readFile('./index.html', 'utf8', function (err, data) {
         if (err) {
             return console.log(err);
         }
