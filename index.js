@@ -3,12 +3,13 @@ var http = require('http'),
 
 var requestListener = function (request, response) {
     response.writeHead(200, {'Content-Type': 'text/html'});
-    response.end(fs.readFile('index.html', function (err, data) {
+    fs.readFile('index.html', function (err, data) {
         if (err) {
             return console.log(err);
         }
-        console.log(data);
-    }););
+        response.write(data);
+    });
+    response.end();
 }
 
 var server = http.createServer(requestListener);
